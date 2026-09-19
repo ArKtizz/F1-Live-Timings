@@ -1,4 +1,6 @@
 package org.example.model;
 
-public record Track() {
+import java.time.Duration;
+
+public record Track(String name, Duration firstSector, Duration secondSector, Duration thirdSector) {
 }
