@@ -15,7 +15,10 @@ public class TimeFormatter {
         return formattedText;
     }
 
-    public static String FullLapTime(Track track) {
-        return "";
+    public static Duration fullLapTime(Track track) {
+        return track.firstSector()
+                .plus(track.secondSector())
+                .plus(track.thirdSector());
+
     }
 }
