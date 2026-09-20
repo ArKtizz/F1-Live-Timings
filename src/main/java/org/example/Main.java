@@ -1,37 +1,44 @@
-package org.example;
+    package org.example;
 
-import org.example.model.Driver;
-import org.example.model.Lap;
-import org.example.model.Team;
-import org.example.model.Track;
-import org.example.service.Simulator;
-import org.example.util.TimeFormatter;
+    import org.example.model.Driver;
 
-import java.sql.Time;
-import java.time.Duration;
+    import org.example.model.Team;
+    import org.example.model.Track;
+    import org.example.service.DriverTask;
+    import org.example.service.LiveTimingBoard;
+    import org.example.util.TimeFormatter;
 
-public class Main {
-    public static void main(String[] args) {
+    import java.time.Duration;
 
-        Driver verstappen = new Driver(3, "VER", Team.REDBULL);
+    public class Main {
+        public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("MAX VERSTAPPEN");
-        System.out.println("Short name: "+verstappen.shortName());
-        System.out.println("Team: "+verstappen.assignedTeam());
-        System.out.println("Team modifier: "+verstappen.assignedTeam().getTimeModifier());
+            Driver verstappen = new Driver(3, "VER", Team.REDBULL);
+            Driver leclerc = new Driver(16, "LEC", Team.FERRARI);
+            Driver alonso = new Driver(14, "ALO", Team.ASTONMARTIN);
 
-        Track suzuka = new Track("Suzuka", Duration.ofMillis(31500), Duration.ofMillis(40200), Duration.ofMillis(18100));
+            System.out.println("MAX VERSTAPPEN");
+            System.out.println("Short name: "+verstappen.shortName());
+            System.out.println("Team: "+verstappen.assignedTeam());
+            System.out.println("Team modifier: "+verstappen.assignedTeam().getTimeModifier());
 
-        System.out.println("Estimated full lap time: "+TimeFormatter.format(TimeFormatter.fullLapTime(suzuka)));
+            Track suzuka = new Track("Suzuka", Duration.ofMillis(31500), Duration.ofMillis(40200), Duration.ofMillis(18100));
 
-        Lap newLap = new Lap();
-        newLap.setFirstSector(Simulator.simulateSectorTime(suzuka.firstSector(), verstappen.assignedTeam().getTimeModifier()));
-        System.out.println(TimeFormatter.format(newLap.getFirstSector()));
-        newLap.setSecondSector(Simulator.simulateSectorTime(suzuka.secondSector(), verstappen.assignedTeam().getTimeModifier()));
-        System.out.println(TimeFormatter.format(newLap.getSecondSector()));
-        newLap.setThirdSector(Simulator.simulateSectorTime(suzuka.thirdSector(), verstappen.assignedTeam().getTimeModifier()));
-        System.out.println(TimeFormatter.format(newLap.getThirdSector()));
-        System.out.println("Full lap: "+TimeFormatter.format(newLap.getLapTime()));
+            System.out.println("Estimated full lap time: "+TimeFormatter.format(TimeFormatter.fullLapTime(suzuka)));
 
+            LiveTimingBoard timingBoard = new LiveTimingBoard();
+
+            DriverTask lapVER = new DriverTask(verstappen, suzuka, timingBoard);
+            DriverTask lapLEC = new DriverTask(leclerc, suzuka, timingBoard);
+            DriverTask lapALO = new DriverTask(alonso, suzuka, timingBoard);
+
+            Thread thread1 = new Thread(lapVER);
+            Thread thread2 = new Thread(lapLEC);
+            Thread thread3 = new Thread(lapALO);
+
+            thread1.start();
+            thread2.start();
+            thread3.start();
+
+        }
     }
-}

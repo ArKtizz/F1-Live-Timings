@@ -1,17 +1,17 @@
 package org.example.model;
 
 public enum Team {
-    MERCEDES(0.96),
-    FERRARI(0.97),
-    MCLAREN(0.98),
-    REDBULL(1),
-    RACINGBULLS(1.02),
-    ALPINE(1.02),
-    HAAS(1.04),
-    AUDI(1.04),
-    WILLIAMS(1.05),
-    ASTONMARTIN(1.07),
-    CADILLAC(1.1);
+    MERCEDES(0.5),
+    FERRARI(0.6),
+    MCLAREN(0.65),
+    REDBULL(0.65),
+    RACINGBULLS(1.15),
+    ALPINE(1.2),
+    HAAS(1.3),
+    AUDI(1.3),
+    WILLIAMS(1.5),
+    ASTONMARTIN(1.8),
+    CADILLAC(2);
 
     private final double timeModifier;
 
