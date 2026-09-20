@@ -17,14 +17,9 @@
             Driver leclerc = new Driver(16, "LEC", Team.FERRARI);
             Driver alonso = new Driver(14, "ALO", Team.ASTONMARTIN);
 
-            System.out.println("MAX VERSTAPPEN");
-            System.out.println("Short name: "+verstappen.shortName());
-            System.out.println("Team: "+verstappen.assignedTeam());
-            System.out.println("Team modifier: "+verstappen.assignedTeam().getTimeModifier());
-
             Track suzuka = new Track("Suzuka", Duration.ofMillis(31500), Duration.ofMillis(40200), Duration.ofMillis(18100));
 
-            System.out.println("Estimated full lap time: "+TimeFormatter.format(TimeFormatter.fullLapTime(suzuka)));
+            System.out.println("Suzuka estimated full lap time: "+TimeFormatter.format(TimeFormatter.fullLapTime(suzuka)));
 
             LiveTimingBoard timingBoard = new LiveTimingBoard();
 
